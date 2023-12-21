@@ -1,4 +1,4 @@
-variable "tags" {  
+variable "tags" {
   default = {
     "Environment" = "Production"
     "Team"        = "Infraestructure"
@@ -7,7 +7,7 @@ variable "tags" {
 }
 
 variable "location" {
-  type= string
+  type    = string
   default = "eastus"
 }
 

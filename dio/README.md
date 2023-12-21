@@ -44,16 +44,17 @@ In this project, we will create the infrastructure using Terraform.
 
 
 ### Step 4 : AzureDevops
-```    project              : AulaDevOps001
-       service connection   : sp-terraform-az
+``` 
+    project              : AulaDevOps001
+    service connection   : sp-terraform-az
 ```
 [pic4]
 
 ### Step 5 : Create a pipeline
 
 ```
-        Get sources
-        Agent Job1
-            Zip Arquivos
-            Publicar artefato        
+    Get sources
+    Agent Job1
+        Zip Arquivos
+        Publicar artefato
 ```
