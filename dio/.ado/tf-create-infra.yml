@@ -1,0 +1,74 @@
+trigger: none
+
+pool:
+  #vmImage: ubuntu-latest
+  name: az400m03l03a-pool
+  demands:
+    - Agent.name -equals az400m03-vm0
+
+variables:
+  bkstrgrg: 'rg-terraform' #storage account resource group name
+  bkstrg: 'staccterraformdevops' #storage account name
+  blcontainer: 'tf-state-container' #blob container
+  bkstrgkey: 'terraform.tfstate' #blob storage key
+
+stages:
+  - stage: TFValidate
+    jobs:
+      - job: TFValidate
+        continueOnError: false
+        steps:
+        - task: TerraformInstaller@1
+          displayName: TFInstall
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTaskV4@4
+          displayName: TFInit
+          inputs:
+            provider: 'azurerm'
+            command: 'init'
+            backendServiceArm: 'sp-terraform-az'
+            backendAzureRmResourceGroupName: '$(bkstrgrg)'
+            backendAzureRmStorageAccountName: '$(bkstrg)'
+            backendAzureRmContainerName: '$(blcontainer)'
+            backendAzureRmKey: '$(bkstrgkey)'
+        - task: TerraformTaskV4@4
+          displayName: TFValidate
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+  - stage: TFDeploy
+    condition: succeeded('TFValidate')
+    dependsOn: TFValidate
+    jobs:
+      - job: TFApply
+        steps:
+          - task: TerraformInstaller@1
+            displayName: TFInstall
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV4@4
+            displayName: TFInit
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'sp-terraform-az'
+              backendAzureRmResourceGroupName: '$(bkstrgrg)'
+              backendAzureRmStorageAccountName: '$(bkstrg)'
+              backendAzureRmContainerName: '$(blcontainer)'
+              backendAzureRmKey: '$(bkstrgkey)'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/dio'
+          - task: TerraformTaskV4@4
+            displayName: TFPlan
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/dio'
+              environmentServiceNameAzureRM: 'sp-terraform-az'
+          - task: TerraformTaskV4@4
+            displayName: TFApply
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)/dio'
+              environmentServiceNameAzureRM: 'sp-terraform-az'
