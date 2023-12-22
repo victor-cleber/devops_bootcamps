@@ -8,28 +8,22 @@ In this project, we will create the infrastructure using Terraform.
 - create an Azure account
 - Create an Azure DevOps account
 
-### Step 1: Authentication
+### Step 1: Authenticate your command line
 ```bash
    az login
 ```
     
-### Step 2 : Create a Resource Group and identify it with tags
-```
-    Resource Group  : rg-terraform
-    environment     : Production
-    team            : Infrastructure
-    owner           : Victor Cleber
-    contact         : victor@cleber.com
-```
+### Step 2 : Create a Resource Group
 
-[pic1]
+![rg-terraform](images/pic_001.jpg)
 
-#### Step 3: Create a storage account and a container
-```
-    Storage account : st-terraform
-    Container       : cont-terraform
-```
-[pic3]
+### Step 3: Create a storage account and a container  for your terraform state
+
+![Storage account](images/pic_002.jpg)
+
+![Container](images/pic_003.jpg)
+
+![Storage account and Container details using VSCode](images/pic_004.jpg)
 
 ### Step 4: Create a service principal
 ```powershell
@@ -39,38 +33,29 @@ In this project, we will create the infrastructure using Terraform.
     echo $subscriptionId
     az ad sp create-for-rbac --name sp-terraform-az --role contributor --scopes /subscriptions/$subscriptionId
 ```
-[pic2] service principal
-[pic3] certificado
 
 
-### Step 4 : AzureDevops
+![service connection](images/pic_005.jpg)
+
+
+
+### Step 5 : Create an AzureDevops project
 ``` 
     project              : AulaDevOps001
     service connection   : sp-terraform-az
 ```
-[pic4]
 
-### Step 5 : Create a pipeline
 
-```
-    Create resource groups:
+### Step 6 : Create resource groups using a pipeline
 
-    Resource Group  : rg-marketing
-    environment     : Production
-    team            : Marketing
-    owner           : Jhon Wiki
-    contact         : jhon@wiki.com
-        
-    Resource Group  : rg-commercial
-    environment     : Production
-    team            : Commercial
-    owner           : Albert Eisten
-    contact         : albert@eisten.com
-    
-    Resource Group  : rg-operations
-    environment     : Production
-    team            : Operations
-    owner           : Anja Alana
-    contact         : anja@alana.com
-    
-```
+![pipeline](images/pic_006.jpg)
+</br>
+</br>
+![rg-commercial](images/pic_007.jpg)
+</br>
+</br>
+
+![rg-marketing](images/pic_008.jpg)
+</br>
+</br>
+![rg-operations](images/pic_009.jpg)
