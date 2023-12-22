@@ -39,7 +39,7 @@ In this project, we will create the infrastructure using Terraform.
     echo $subscriptionId
     az ad sp create-for-rbac --name sp-terraform-az --role contributor --scopes /subscriptions/$subscriptionId
 ```
-[pic2] service principal 
+[pic2] service principal
 [pic3] certificado
 
 
@@ -53,8 +53,24 @@ In this project, we will create the infrastructure using Terraform.
 ### Step 5 : Create a pipeline
 
 ```
-    Get sources
-    Agent Job1
-        Zip Arquivos
-        Publicar artefato
+    Create resource groups:
+
+    Resource Group  : rg-marketing
+    environment     : Production
+    team            : Marketing
+    owner           : Jhon Wiki
+    contact         : jhon@wiki.com
+        
+    Resource Group  : rg-commercial
+    environment     : Production
+    team            : Commercial
+    owner           : Albert Eisten
+    contact         : albert@eisten.com
+    
+    Resource Group  : rg-operations
+    environment     : Production
+    team            : Operations
+    owner           : Anja Alana
+    contact         : anja@alana.com
+    
 ```
