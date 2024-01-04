@@ -1,4 +1,5 @@
 # DIO BOOTCAMP
+
 In this project, we will create the infrastructure using Terraform.
 
 ## Pre-requirements
@@ -9,10 +10,11 @@ In this project, we will create the infrastructure using Terraform.
 - Create an Azure DevOps account
 
 ### Step 1: Authenticate your command line
+
 ```bash
    az login
 ```
-    
+
 ### Step 2 : Create a Resource Group
 
 ![rg-terraform](images/pic_001.jpg)
@@ -26,6 +28,7 @@ In this project, we will create the infrastructure using Terraform.
 ![Storage account and Container details using VSCode](images/pic_004.jpg)
 
 ### Step 4: Create a service principal
+
 ```powershell
     subscriptionName=$(az account show --query name --output tsv)
     subscriptionId=$(az account show --query id --output tsv)
@@ -34,17 +37,14 @@ In this project, we will create the infrastructure using Terraform.
     az ad sp create-for-rbac --name sp-terraform-az --role contributor --scopes /subscriptions/$subscriptionId
 ```
 
-
 ![service connection](images/pic_005.jpg)
 
-
-
 ### Step 5 : Create an AzureDevops project
-``` 
+
+```text
     project              : AulaDevOps001
     service connection   : sp-terraform-az
 ```
-
 
 ### Step 6 : Create resource groups using a pipeline
 
